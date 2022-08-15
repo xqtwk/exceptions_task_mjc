@@ -4,7 +4,7 @@ package main;
 public class Runner {
     public static void main(String[] args) {
 
-        PurchaseArray products = new PurchaseArray(new AbstractPurchase[]{
+        /*PurchaseArray products = new PurchaseArray(new AbstractPurchase[]{
             new EveryUnitDiscountedPurchase(new Product("apple", new Euro(500)),50, new Euro(40)),
             new GreaterThanConstantDiscountedPurchase(new Product("pineapple", new Euro(997)),50, 8.75),
             new AdditionForTransportExpensesPurchase(new Product("carrot", new Euro(666)),50, new Euro(12)),
@@ -21,10 +21,11 @@ public class Runner {
         products.printArr();
         System.out.println(products.getMinimalCost());
         int cost = 33300;
-        if (products.search(cost) < 0) {
+        int index = products.search(cost);
+        if (index < 0) {
             System.out.println("Purchase not found");
         } else {
-            products.printByIndex(products.search(cost));
-        }
+            products.printByIndex(index);
+        }*/
     }
 }
