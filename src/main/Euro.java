@@ -15,8 +15,12 @@ public class Euro implements Comparable<Euro> {
         this(euro.value);
     }
 
+    public Euro(String strCents) {
+        this(Integer.parseInt(strCents));
+    }
+
     public int getCents() {
-        return value;
+        return value % 100;
     }
 
     public Euro add(Euro euro){

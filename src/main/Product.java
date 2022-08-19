@@ -8,17 +8,13 @@ public class Product {
         this.price = price;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Euro getPrice() {
         return price;
     }
 
     @Override
     public String toString() {
-        return getName() + ";" + getPrice();
+        return name + ";" + price;
     }
     @Override
     public boolean equals(Object obj) {

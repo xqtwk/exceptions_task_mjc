@@ -1,52 +1,54 @@
 package main;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 
 public class PurchaseList {
-    private final AbstractPurchase[] purchases;
+    private final ArrayList<Purchase> purchases;
+    private final Comparator<Purchase> comparator;
 
-    public PurchaseList(AbstractPurchase[] purchases) {
+    public PurchaseList(ArrayList<Purchase> purchases, Comparator<Purchase> comparator) {
         this.purchases = purchases;
+        this.comparator = comparator;
     }
 
-    public void printArr(){
-        for(int i = 0; i < purchases.length; i++) {
-            System.out.println(purchases[i]);
-        }
+    public PurchaseList(Comparator<Purchase> comparator) {
+        this.purchases = new ArrayList<>(0);
+        this.comparator = comparator;
     }
-    public void printByIndex(int index) {
-        System.out.println(purchases[index]);
+
+    public void insertPurchase(int index, Purchase purchase){
+        try {
+            this.purchases.add(index, purchase);
+        } catch (IndexOutOfBoundsException e){
+            this.purchases.add(purchase);
+        }
     }
 
     public void sort(){
-        Arrays.sort(purchases);
+        Collections.sort(purchases);
     }
 
-    public String getMinimalCost(){
-        // new array, so the original doesn't gets sorted
-        AbstractPurchase[] array = purchases.clone();
-        Arrays.sort(array);
-        return "Minimum cost = " + array[array.length-1].getCost().getCents();
-    }
-
-    public int search(int value) {
-        int[] costs = new int[purchases.length];
-        for(int i = 0; i < purchases.length; i++){
-            costs[i] = purchases[i].getCost().getCents();
+    public String getCost(){
+        Euro cost = new Euro(0);
+        for (Purchase purchase: this.purchases){
+            cost = cost.add(purchase.getCost());
         }
-        return Arrays.binarySearch(costs, value);
+        return cost.toString();
     }
 
+    public int search(Purchase purchase) {
+        return Collections.binarySearch(this.purchases, purchase, this.comparator);
+    }
     @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof PurchaseList) || (obj == null)) {
-            return false;
+    public String toString() {
+        String string = "";
+        for (Purchase purchase: this.purchases){
+            string += purchase.toString() + "\n";
         }
-
-        PurchaseList another = (PurchaseList) obj;
-
-        return  Arrays.equals(this.purchases, another.purchases);
+        return string;
     }
 
 }

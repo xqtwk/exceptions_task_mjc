@@ -1,7 +1,7 @@
 package main;
 
 
-public class Runner {
+public class TestRunner {
     public static void main(String[] args) {
 
         /*PurchaseArray products = new PurchaseArray(new AbstractPurchase[]{
