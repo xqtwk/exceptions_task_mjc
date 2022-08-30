@@ -1,6 +1,8 @@
 package main;
 
 
+import main.exceptions.OutOfBoundArgumentException;
+
 public class Purchase extends AbstractPurchase {
 
     public Purchase(Product product, int purchasedUnits) {
@@ -13,7 +15,7 @@ public class Purchase extends AbstractPurchase {
 
     private static Purchase getValidPurchase(String[] fields) {
         if(fields.length != PurchasesFactory.getPurchaseFieldsNumber()) {
-            throw new ArrayIndexOutOfBoundsException("wrong args number");
+            throw new OutOfBoundArgumentException("wrong args number");
         }
         return new Purchase(new Product(fields[0], new Euro(fields[1])), Integer.parseInt(fields[2]));
     }

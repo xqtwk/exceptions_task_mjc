@@ -1,5 +1,7 @@
 package main;
 
+import main.exceptions.CsvLineException;
+
 import java.lang.constant.Constable;
 import java.text.ParseException;
 import java.util.Collections;
@@ -30,25 +32,23 @@ public class PurchasesFactory {
         return PURCHASE_FIELDS_NUMBER;
     }
 
-    private static PurchaseKind getPurchaseKind(String[] fields) throws ArrayIndexOutOfBoundsException, IllegalArgumentException {
+    private static PurchaseKind getPurchaseKind(String[] fields)  throws CsvLineException {
         try {
             return PurchaseKind.values()[fields.length - PURCHASE_FIELDS_NUMBER];
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ArrayIndexOutOfBoundsException();
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException();
+        } catch (ArrayIndexOutOfBoundsException | IllegalArgumentException e) {
+            throw new CsvLineException(fields, e);
         }
     }
 
-    public static Purchase createPurchase(String line){
+    public static Purchase createPurchase(String line) throws CsvLineException {
         return createPurchase(line.split(";"));
     }
 
-    public static Purchase createPurchase(String[] fields) throws IllegalArgumentException{
+    public static Purchase createPurchase(String[] fields) throws CsvLineException{
         try{
             return getPurchaseKind(fields).getPurchase(fields);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("AAA");
+            throw new CsvLineException(fields, e);
         }
     }
 

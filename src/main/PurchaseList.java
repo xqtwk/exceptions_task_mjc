@@ -1,6 +1,9 @@
 package main;
 
-import java.io.BufferedReader;
+import main.exceptions.CsvLineException;
+import main.exceptions.NoArgumentException;
+import main.exceptions.OutOfBoundArgumentException;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,15 +17,15 @@ public class PurchaseList {
     private final ArrayList<Purchase> purchases;
     private final Comparator<Purchase> comparator;
 
-    public PurchaseList(String path, Comparator<Purchase> comparator) throws FileNotFoundException {
+    public PurchaseList(String path, Comparator<Purchase> comparator) throws CsvLineException {
         this(new File(path), comparator);
     }
 
-    public PurchaseList(Comparator<Purchase> comparator) throws FileNotFoundException {
+    public PurchaseList(Comparator<Purchase> comparator) throws CsvLineException {
         this("", comparator);
     }
 
-    public PurchaseList(File fileName, Comparator<Purchase> comparator) throws FileNotFoundException {
+    public PurchaseList(File fileName, Comparator<Purchase> comparator) throws CsvLineException {
         this.purchases = new ArrayList<>(0);
         this.comparator = comparator;
         try (Scanner scanner = new Scanner(new FileReader(fileName))){
@@ -30,8 +33,14 @@ public class PurchaseList {
                 Purchase purchase = PurchasesFactory.createPurchase(scanner.nextLine());
                 purchases.add(purchase);
             }
+            if (purchases.size() == 0) {
+                throw new NoArgumentException("File is empty");
+            }
         } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("Error, file not found");
+            //e.printStackTrace();
+            throw new CsvLineException("file not found", e);
+        } catch (CsvLineException e) {
+            System.err.println(e);
         }
     }
 
@@ -41,7 +50,7 @@ public class PurchaseList {
         } else if (from == to) {
             to = from+1;
         }else if (from > to) {
-            throw new IllegalArgumentException();
+            throw new OutOfBoundArgumentException();
         } else if (to >= this.purchases.size()) {
             to = this.purchases.size();
         }
