@@ -38,7 +38,9 @@ public class PurchaseList {
     public void subList(int from, int to) throws IllegalArgumentException{
         if (from < 0 ) {
             from = 0;
-        } else if (from > to) {
+        } else if (from == to) {
+            to = from+1;
+        }else if (from > to) {
             throw new IllegalArgumentException();
         } else if (to >= this.purchases.size()) {
             to = this.purchases.size();

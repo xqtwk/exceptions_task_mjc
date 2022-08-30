@@ -28,7 +28,7 @@ public class PriceDiscountPurchase extends Purchase{
 
     @Override
     protected Euro getFinalCost(Euro cost) {
-        return super.getFinalCost(cost).sub(this.discount.mul(getPurchasedUnits()));
+        return super.getFinalCost(cost).sub(discount.mul(purchasedUnits));
     }
 
     @Override
