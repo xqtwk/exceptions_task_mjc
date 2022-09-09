@@ -7,8 +7,8 @@ import java.text.ParseException;
 import java.util.Collections;
 
 public class PurchasesFactory {
-    private static final int PURCHASE_FIELDS_NUMBER = 3;
-    private static final int DISCOUNT_PURCHASE_FIELDS_NUMBER = 4;
+    public static final int PURCHASE_FIELDS_NUMBER = 3;
+    public static final int DISCOUNT_PURCHASE_FIELDS_NUMBER = 4;
     private enum PurchaseKind {
         PURCHASE {
             @Override

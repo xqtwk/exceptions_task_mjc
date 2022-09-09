@@ -46,9 +46,7 @@ public class Purchase implements Comparable<Purchase>{
     }
 
     public Euro getCost(){
-        Euro baseCost = product.getPrice().mul(purchasedUnits);
-        Euro finalCost = getFinalCost(baseCost);
-        return finalCost.round(RoundMethod.FLOOR, 2);
+        return product.getPrice().mul(purchasedUnits);
     }
 
     public String toString() {
