@@ -16,9 +16,9 @@ public class TestRunner {
         System.out.println(purchaseList);
         purchaseList.sort();
         System.out.println(purchaseList);
-        purchaseList.subList(1, 1);
+        purchaseList.subList(1, 2);
         System.out.println(purchaseList);
-        System.out.println("Index of purchase with quantity -2 is:" + purchaseList.search(new Purchase(new Product("test", new Euro(1)), -2)));
+        System.out.println("Index of purchase with quantity 200 is:" + purchaseList.search(new Purchase(new Product("test", new Euro(1)), 200)));
         System.out.println("Total cost: " + purchaseList.getCost());
     }
 }

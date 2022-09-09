@@ -1,12 +1,20 @@
 package main;
 
 
+import main.exceptions.NegativeArgumentException;
 import main.exceptions.OutOfBoundArgumentException;
 
-public class Purchase extends AbstractPurchase {
+public class Purchase implements Comparable<Purchase>{
+    protected Product product;
+    protected int purchasedUnits;
+
+    public Purchase() {}
 
     public Purchase(Product product, int purchasedUnits) {
-        super(product, purchasedUnits);
+        if (purchasedUnits <= 0)
+            throw new NegativeArgumentException("Purchased units amount can't be lower than zero or equal to zero");
+        this.product = product;
+        this.purchasedUnits = purchasedUnits;
     }
 
     public Purchase(String[] fields) {
@@ -33,8 +41,37 @@ public class Purchase extends AbstractPurchase {
         return product;
     }
 
-    @Override
     protected Euro getFinalCost(Euro cost) {
         return cost;
+    }
+
+    public Euro getCost(){
+        Euro baseCost = product.getPrice().mul(purchasedUnits);
+        Euro finalCost = getFinalCost(baseCost);
+        return finalCost.round(RoundMethod.FLOOR, 2);
+    }
+
+    public String toString() {
+        return fieldsToString() + ";" + getCost();
+    }
+
+    protected String fieldsToString() {
+        return getClass().getSimpleName() + ";" + product + ";" + purchasedUnits;
+    }
+
+    @Override
+    public int compareTo(Purchase o) {
+        return o.getCost().compareTo(getCost());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Purchase) || (obj == null)) {
+            return false;
+        }
+
+        Purchase another = (Purchase) obj;
+
+        return this.product.equals(another.product) && purchasedUnits == another.purchasedUnits;
     }
 }

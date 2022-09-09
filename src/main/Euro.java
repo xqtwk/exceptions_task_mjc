@@ -1,14 +1,22 @@
 package main;
 
+import main.exceptions.NegativeArgumentException;
+
 public class Euro implements Comparable<Euro> {
     private final int value;
 
     public Euro(int cents) {
+        if(cents < 0)
+            throw new NegativeArgumentException("cents value can't be negative");
         this.value = cents;
     }
 
     public Euro(int euros, int cents){
         this(euros*100 + cents);
+        if(cents < 0)
+            throw new NegativeArgumentException("cents value can't be negative");
+        if(euros < 0)
+            throw new NegativeArgumentException("euros value can't be negative");
     }
 
     public Euro(Euro euro){
