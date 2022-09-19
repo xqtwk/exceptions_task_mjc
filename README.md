@@ -1,4 +1,4 @@
-Exceptions task MJC school
+Exceptions task for EPAM internship
 ```
 Define the class PurchaseList  that represents a  list  of  objects of two types (see the previous task): 
 – the immutable superclass Purchase for a product purchase (without discount or extra charge),
